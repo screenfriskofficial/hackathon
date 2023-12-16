@@ -2,7 +2,7 @@ import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { Button, Input, Select } from "antd";
-import { createContext, useState } from "react";
+import { useContext, useState } from "react";
 import { createResumeSchema } from "./validation/createResumeSchema.js";
 import { $api } from "../../shared/api/api.js";
 import { UserContext } from "../../app/providers/user-provider/UserProvider.jsx";
@@ -17,9 +17,7 @@ export const CreateResumeForm = () => {
     resolver: yupResolver(createResumeSchema),
   });
 
-  const { user } = createContext(UserContext);
-
-  console.log(user && user.email);
+  const { user } = useContext(UserContext);
 
   const { TextArea } = Input;
 
@@ -34,6 +32,7 @@ export const CreateResumeForm = () => {
   const onSubmit = async (data) => {
     const fullData = {
       ...data,
+      user_uuid: user.id,
       schedule: scheduleValue,
       employment: employmentValue,
       education: educationValue,

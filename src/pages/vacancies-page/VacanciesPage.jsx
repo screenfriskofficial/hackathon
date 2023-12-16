@@ -122,7 +122,7 @@ const VacanciesPage = () => {
   }
 
   return (
-    <div className={"container m-auto"}>
+    <div className={"container m-auto flex flex-col"}>
       {error && <div>Error: {error}</div>}
       <Select
         className={"mt-4"}
@@ -141,6 +141,11 @@ const VacanciesPage = () => {
         options={options}
       />
 
+      {vacancies.length < 1 && (
+        <span className="w-full flex justify-center items-center">
+          Тут пусто
+        </span>
+      )}
       {vacancies.map((vacancy) => (
         <VacancyCard
           key={vacancy.vacancy.id}

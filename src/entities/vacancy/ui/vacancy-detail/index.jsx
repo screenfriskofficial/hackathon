@@ -12,6 +12,7 @@ export const VacancyDetail = ({
 }) => {
   const [myResumes, setMyResumes] = useState([]);
   const [resume, setResume] = useState("");
+  const { user } = useContext(UserContext);
 
   const onChange = (value) => {
     setResume(value);
@@ -22,9 +23,14 @@ export const VacancyDetail = ({
   useEffect(() => {
     const getMyResumes = async () => {
       const response = await $api.get("/resume");
+
       const data = response.data;
 
-      const transformedData = data.map((item) => ({
+      const filteredData = user
+        ? data.filter((item) => user.id === item.user_uuid)
+        : data;
+
+      const transformedData = filteredData.map((item) => ({
         value: item.title,
         label: item.title,
       }));
@@ -67,7 +73,7 @@ export const VacancyDetail = ({
             options={myResumes}
           />
           <Button
-            onSubmit={() => message.success("Резюме прикреплено")}
+            onClick={() => message.success("Резюме прикреплено", 1)}
             disabled={!resume}
           >
             Прикрепить резюме

@@ -59,13 +59,13 @@ export const Navbar = () => {
             </div>
 
             {token ? (
-              <div
+              <Button
                 onClick={showProfileModal}
-                className="flex items-center gap-3 cursor-pointer"
+                className="flex ml-5 items-center gap-3 cursor-pointer"
               >
                 <UserIcon className="w-6 cursor-pointer" />
                 <p>Профиль</p>
-              </div>
+              </Button>
             ) : (
               <Link to={"/login"}>
                 <Button className="cursor-pointer">Вход</Button>
