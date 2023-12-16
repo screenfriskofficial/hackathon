@@ -95,6 +95,7 @@ const VacanciesPage = () => {
 
   const onSearch = (value, info) => {
     setSearchValue(value);
+    setCategory("");
   };
 
   const onClear = () => {
