@@ -150,7 +150,7 @@ export const CreateResumeForm = () => {
           placeholder={"Опишите ваш опыт"}
           onChange={onChangeDescription}
         />
-        />
+
         <p className="text-red-600">{errors.description?.message}</p>
       </section>
 

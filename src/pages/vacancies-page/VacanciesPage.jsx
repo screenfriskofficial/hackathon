@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Spin, Pagination, Select } from "antd";
+import { Pagination, Select, Input, Button } from "antd";
 import axios from "axios";
 import { VacancyCard } from "../../entities/vacancy/index.jsx";
 import { Spinner } from "../../shared/ui/spinner/index.jsx";
@@ -80,13 +80,25 @@ const VacanciesPage = () => {
   const [vacancies, setVacancies] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [limit, setLimit] = useState(30);
-  const [category, setCategory] = useState("Safety");
+  const [category, setCategory] = useState(options[0]);
+  const [searchValue, setSearchValue] = useState("");
+
+  const { Search } = Input;
 
   const onChangeCategory = (value) => {
     setCategory(value);
+    setSearchValue("");
   };
   const onChangePage = (page) => {
     setCurrentPage(page);
+  };
+
+  const onSearch = (value, info) => {
+    setSearchValue(value);
+  };
+
+  const onClear = () => {
+    setCategory("");
   };
 
   useEffect(() => {
@@ -97,9 +109,10 @@ const VacanciesPage = () => {
           "https://opendata.trudvsem.ru/api/v1/vacancies/region/65",
           {
             params: {
+              text: searchValue,
               limit: limit,
               offset: currentPage,
-              industry: category,
+              industry: searchValue.length >= 1 ? "" : category,
             },
           },
         );
@@ -112,7 +125,7 @@ const VacanciesPage = () => {
       }
     };
     getVacancies();
-  }, [currentPage, limit, category]);
+  }, [currentPage, limit, searchValue, category]);
 
   if (isLoading) {
     return <Spinner />;
@@ -121,20 +134,20 @@ const VacanciesPage = () => {
   return (
     <div className={"container m-auto flex flex-col"}>
       {error && <div>Error: {error}</div>}
-      <Select
+      <Search
+        placeholder="Поиск по вакансиям"
+        onSearch={onSearch}
         className={"mt-4"}
-        showSearch
+        onClear={onClear}
+      />
+
+      <Select
+        className="mt-4"
+        style={{ width: "100%" }}
         defaultValue={category}
-        style={{ width: 200 }}
-        placeholder="Сферы деятельности:"
-        optionFilterProp="children"
+        placeholder="Сферы деятельности"
         onChange={onChangeCategory}
-        filterOption={(input, option) => (option?.label ?? "").includes(input)}
-        filterSort={(optionA, optionB) =>
-          (optionA?.label ?? "")
-            .toLowerCase()
-            .localeCompare((optionB?.label ?? "").toLowerCase())
-        }
+        optionLabelProp="label"
         options={options}
       />
 
