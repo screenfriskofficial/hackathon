@@ -1,5 +1,4 @@
 import { Link, useLocation } from "react-router-dom";
-import { ArrowLeftIcon } from "@heroicons/react/24/solid";
 import { UserIcon } from "@heroicons/react/24/solid";
 
 import { useContext, useState } from "react";
@@ -44,13 +43,9 @@ export const Navbar = () => {
         <div className="container m-auto overflow-x-auto">
           <nav className="flex pr-5 pl-5 w-full justify-between">
             <div className="flex items-center gap-5">
-              <Link to={"/"}>
-                <ArrowLeftIcon className="w-6 cursor-pointer" />
-              </Link>
-
-              {token && location.pathname !== "/vacancies" && (
+              {token && location.pathname !== "/" && (
                 <>
-                  <Link to={"/vacancies"}>
+                  <Link to={"/"}>
                     <Button>Перейти к вакансиям</Button>
                   </Link>
                 </>

@@ -5,7 +5,7 @@ export const MainLayout = () => {
   const location = useLocation();
   return (
     <>
-      {location.pathname !== "/" && <Navbar />}
+      <Navbar />
 
       <Outlet />
     </>

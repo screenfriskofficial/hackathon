@@ -28,12 +28,8 @@ export const AppProvider = () => {
       element: <MainLayout />,
       children: [
         {
-          element: <MainPage />,
-          path: "/",
-        },
-        {
           element: <VacanciesPage />,
-          path: "/vacancies",
+          path: "/",
         },
         {
           element: <LoginPage />,
