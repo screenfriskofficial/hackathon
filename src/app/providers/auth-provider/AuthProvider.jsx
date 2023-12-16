@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }) => {
         console.log(setToken);
         setToken(data.access_token);
         toast.success("Вы успешно вошли в аккаунт!");
-        navigation("/vacancies");
+        navigation("/");
       }
     } catch (e) {
       setError(e.message);
