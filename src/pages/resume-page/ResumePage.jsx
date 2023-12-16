@@ -3,6 +3,7 @@ import { $api } from "../../shared/api/api.js";
 import { ResumeCard } from "../../entities/resume/index.jsx";
 import { Spin } from "antd";
 import { UserContext } from "../../app/providers/user-provider/UserProvider.jsx";
+import { Spinner } from "../../shared/ui/spinner/index.jsx";
 
 const ResumePage = () => {
   const [resumes, setResumes] = useState([]);
@@ -34,11 +35,7 @@ const ResumePage = () => {
   }, [user]);
 
   if (isLoading) {
-    return (
-      <div className="w-full h-[calc(100vh-48px)] flex items-center justify-center">
-        <Spin />
-      </div>
-    );
+    return <Spinner />;
   }
 
   return (

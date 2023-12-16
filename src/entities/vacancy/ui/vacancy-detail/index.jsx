@@ -2,8 +2,10 @@ import { Button, Divider, message, Select } from "antd";
 import { useContext, useEffect, useState } from "react";
 import { $api } from "../../../../shared/api/api.js";
 import { UserContext } from "../../../../app/providers/user-provider/UserProvider.jsx";
+import { plural } from "../../../../shared/lib/plural/Plural.js";
 
 export const VacancyDetail = ({
+  id,
   salary,
   currency,
   jobName,
@@ -11,11 +13,12 @@ export const VacancyDetail = ({
   location,
 }) => {
   const [myResumes, setMyResumes] = useState([]);
-  const [resume, setResume] = useState("");
+  const [resumesData, setResumesData] = useState([]);
+  const [selectedResume, setSelectedResume] = useState("");
   const { user } = useContext(UserContext);
 
   const onChange = (value) => {
-    setResume(value);
+    setSelectedResume(value);
   };
 
   const { token } = useContext(UserContext);
@@ -30,8 +33,10 @@ export const VacancyDetail = ({
         ? data.filter((item) => user.id === item.user_uuid)
         : data;
 
+      setResumesData(filteredData);
+
       const transformedData = filteredData.map((item) => ({
-        value: item.title,
+        value: item.id,
         label: item.title,
       }));
       setMyResumes(transformedData);
@@ -39,6 +44,45 @@ export const VacancyDetail = ({
 
     getMyResumes();
   }, []);
+
+  useEffect(() => {
+    const attachedResumes =
+      JSON.parse(localStorage.getItem("attachedResumes")) || [];
+    const isAttached = attachedResumes.some((item) => item.vacancyId === id);
+    if (isAttached) {
+      const selectedResume = attachedResumes.find(
+        (item) => item.vacancyId === id,
+      ).resumeId;
+      setSelectedResume(selectedResume);
+    }
+  }, [id]);
+
+  const handleAttachResume = () => {
+    if (selectedResume) {
+      const attachedResumes =
+        JSON.parse(localStorage.getItem("attachedResumes")) || [];
+
+      const isAlreadyAttached = attachedResumes.some(
+        (item) => item.vacancyId === id && item.resumeId === selectedResume,
+      );
+
+      if (!isAlreadyAttached) {
+        attachedResumes.push({
+          vacancyId: id,
+          resumeId: selectedResume,
+        });
+        localStorage.setItem(
+          "attachedResumes",
+          JSON.stringify(attachedResumes),
+        );
+        message.success("Резюме прикреплено");
+      } else {
+        message.warning("Резюме уже прикреплено к этой вакансии");
+      }
+    } else {
+      message.warning("Выберите резюме для прикрепления");
+    }
+  };
 
   return (
     <div className="">
@@ -57,6 +101,10 @@ export const VacancyDetail = ({
       {token && (
         <div className="flex flex-col gap-5">
           <Select
+            disabled={
+              !localStorage.getItem("attachedResumes") ||
+              localStorage.getItem("attachedResumes").includes(id)
+            }
             showSearch
             style={{ width: 200 }}
             placeholder="Доступные резюме:"
@@ -72,11 +120,50 @@ export const VacancyDetail = ({
             }
             options={myResumes}
           />
-          <Button
-            onClick={() => message.success("Резюме прикреплено", 1)}
-            disabled={!resume}
-          >
-            Прикрепить резюме
+
+          {localStorage.getItem("attachedResumes") &&
+            selectedResume &&
+            resumesData
+              .filter((resume) => resume.id === selectedResume)
+              .map((resume) => (
+                <div
+                  key={resume.id}
+                  className="grid grid-cols-2 place-content-center border-2 gap-1 p-1 rounded-md"
+                >
+                  <h3>
+                    <span className="font-bold text-sm">ФИО:</span> {resume.fio}
+                  </h3>
+                  <p>
+                    <span className="font-bold text-sm">Email:</span>{" "}
+                    {resume.email}
+                  </p>
+                  <p>
+                    <span className="font-bold text-sm">Номер телефона:</span>{" "}
+                    {resume.phone_number}
+                  </p>
+                  <p>
+                    <span className="font-bold text-sm">Адрес:</span>{" "}
+                    {resume.address}
+                  </p>
+                  <p>
+                    <span className="font-bold text-sm">Опыт работы:</span>{" "}
+                    {resume.experience}&nbsp;
+                    {plural(resume.experience)}
+                  </p>
+                  {resume.description && (
+                    <p>
+                      <span className="font-bold text-sm">Описание:</span>{" "}
+                      {resume.description}
+                    </p>
+                  )}
+                </div>
+              ))}
+
+          <Button onClick={handleAttachResume} disabled={!selectedResume}>
+            {localStorage.getItem("attachedResumes") &&
+            localStorage.getItem("attachedResumes").includes(id)
+              ? "Прикреплено!"
+              : "Прикрепить резюме"}
           </Button>
         </div>
       )}

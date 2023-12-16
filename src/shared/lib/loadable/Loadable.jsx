@@ -1,16 +1,10 @@
 import { Suspense } from "react";
-import { Spin } from "antd";
+import { Spinner } from "../../ui/spinner/index.jsx";
 
 export const Loadable = (Component) => {
   return function fn(props) {
     return (
-      <Suspense
-        fallback={
-          <span className="w-full h-[calc(100vh-48px)] flex items-center justify-center">
-            <Spin />
-          </span>
-        }
-      >
+      <Suspense fallback={<Spinner />}>
         <Component {...props} />
       </Suspense>
     );

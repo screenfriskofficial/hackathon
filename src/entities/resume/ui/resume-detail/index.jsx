@@ -1,9 +1,9 @@
 import { Divider } from "antd";
 import { plural } from "../../../../shared/lib/plural/Plural.js";
+import axios from "axios";
 
 export const ResumeDetail = ({
   title,
-  fio,
   experience,
   email,
   phone_number,

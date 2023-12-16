@@ -88,6 +88,7 @@ export const VacancyCard = (props) => {
         footer={null}
       >
         <VacancyDetail
+          id={id}
           currency={currency}
           salary={salary}
           jobName={jobName}

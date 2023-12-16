@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Spin, Pagination, Select } from "antd";
 import axios from "axios";
 import { VacancyCard } from "../../entities/vacancy/index.jsx";
+import { Spinner } from "../../shared/ui/spinner/index.jsx";
 
 const options = [
   { value: "DeskWork", label: "Административная работа, секретариат, АХО" },
@@ -114,11 +115,7 @@ const VacanciesPage = () => {
   }, [currentPage, limit, category]);
 
   if (isLoading) {
-    return (
-      <div className="w-full h-[calc(100vh-48px)] flex items-center justify-center">
-        <Spin />
-      </div>
-    );
+    return <Spinner />;
   }
 
   return (

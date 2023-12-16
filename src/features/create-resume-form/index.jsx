@@ -1,7 +1,7 @@
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { Button, Input, Select } from "antd";
+import { Button, Input, message, Select } from "antd";
 import { useContext, useState } from "react";
 import { createResumeSchema } from "./validation/createResumeSchema.js";
 import { $api } from "../../shared/api/api.js";
@@ -29,6 +29,8 @@ export const CreateResumeForm = () => {
 
   const [descriptionValue, setDescriptionValue] = useState("");
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const onSubmit = async (data) => {
     const fullData = {
       ...data,
@@ -38,11 +40,18 @@ export const CreateResumeForm = () => {
       education: educationValue,
       description: descriptionValue,
     };
-    console.log(fullData);
-    const response = await $api.post(
-      "https://63dacbd3a6b96559.mokky.dev/resume",
-      fullData,
-    );
+    try {
+      setIsLoading(true);
+      const response = await $api.post(
+        "https://63dacbd3a6b96559.mokky.dev/resume",
+        fullData,
+      );
+      message.success("Резюме успешно создано!", 1);
+    } catch (e) {
+      message.error("Ошибка создания резюме " + e, 1);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const onChangeEmployment = (value) => {
@@ -216,7 +225,9 @@ export const CreateResumeForm = () => {
         ]}
       />
 
-      <Button htmlType="submit">Создать резюме</Button>
+      <Button loading={isLoading} htmlType="submit">
+        Создать резюме
+      </Button>
     </form>
   );
 };
