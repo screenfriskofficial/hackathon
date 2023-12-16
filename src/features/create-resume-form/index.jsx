@@ -2,7 +2,7 @@ import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { Button, Input, message, Select } from "antd";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { createResumeSchema } from "./validation/createResumeSchema.js";
 import { $api } from "../../shared/api/api.js";
 import { UserContext } from "../../app/providers/user-provider/UserProvider.jsx";
@@ -143,19 +143,13 @@ export const CreateResumeForm = () => {
       </section>
 
       <section>
-        <Controller
-          name="description"
-          control={control}
-          render={({ field }) => (
-            <TextArea
-              showCount
-              maxLength={350}
-              style={{ height: 120, resize: "none", marginBottom: 15 }}
-              placeholder={"Опишите ваш опыт"}
-              onChange={onChangeDescription}
-              {...field}
-            />
-          )}
+        <TextArea
+          showCount
+          maxLength={350}
+          style={{ height: 120, resize: "none", marginBottom: 15 }}
+          placeholder={"Опишите ваш опыт"}
+          onChange={onChangeDescription}
+        />
         />
         <p className="text-red-600">{errors.description?.message}</p>
       </section>

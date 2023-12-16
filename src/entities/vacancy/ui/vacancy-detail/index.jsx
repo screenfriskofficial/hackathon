@@ -48,6 +48,14 @@ export const VacancyDetail = ({
   useEffect(() => {
     const attachedResumes =
       JSON.parse(localStorage.getItem("attachedResumes")) || [];
+    if (attachedResumes.length === 0) {
+      const initialData = [
+        { vacancyId: 1, resumeId: "someResumeId1" },
+        { vacancyId: 2, resumeId: "someResumeId2" },
+      ];
+
+      localStorage.setItem("attachedResumes", JSON.stringify(initialData));
+    }
     const isAttached = attachedResumes.some((item) => item.vacancyId === id);
     if (isAttached) {
       const selectedResume = attachedResumes.find(
