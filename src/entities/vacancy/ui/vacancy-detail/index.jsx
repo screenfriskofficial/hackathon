@@ -111,7 +111,7 @@ export const VacancyDetail = ({
 
       <h3>
         Вакансия доступна по QR или по{" "}
-        <a className="uppercase text-blue-400" href={vac_url}>
+        <a className="uppercase text-blue-400" target="_blank" href={vac_url}>
           ссылке
         </a>
       </h3>
