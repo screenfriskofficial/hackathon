@@ -7,6 +7,8 @@ import { plural } from "../../../../shared/lib/plural/Plural.js";
 export const VacancyDetail = ({
   vac_url,
   id,
+  salary_min,
+  salary_max,
   salary,
   currency,
   jobName,
@@ -97,7 +99,7 @@ export const VacancyDetail = ({
     <div className="">
       <h3>{jobName}</h3>
       <p>
-        Заработная плата {salary} {currency}
+        Заработная плата {salary} {currency} {salary_max && "до " + salary_max}
       </p>
 
       <Divider />

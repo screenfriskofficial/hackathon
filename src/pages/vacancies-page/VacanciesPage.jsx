@@ -187,6 +187,8 @@ const VacanciesPage = () => {
           companyName={vacancy.vacancy.company.name}
           key={vacancy.vacancy.id}
           id={vacancy.vacancy.id}
+          salary_min={vacancy.vacancy.salary_min}
+          salary_max={vacancy.vacancy.salary_max}
           jobName={vacancy.vacancy["job-name"]}
           salary={vacancy.vacancy.salary}
           currency={vacancy.vacancy.currency}

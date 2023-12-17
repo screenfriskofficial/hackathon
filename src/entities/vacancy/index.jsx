@@ -8,6 +8,8 @@ import { favoritesActions } from "../favorites/models/slice/favoritesSlice.jsx";
 export const VacancyCard = (props) => {
   const {
     id,
+    salary_min,
+    salary_max,
     jobName,
     salary,
     currency,
@@ -41,12 +43,15 @@ export const VacancyCard = (props) => {
     dispatch(
       favoritesActions.addToFavorites({
         id,
+        salary_min,
+        salary_max,
+        jobName,
         salary,
         currency,
-        jobName,
+        vac_url,
         duty,
         location,
-        vac_url,
+        companyName,
       }),
     );
   };
@@ -54,6 +59,7 @@ export const VacancyCard = (props) => {
   const handleRemove = () => {
     dispatch(favoritesActions.removeFromFavorites(id));
   };
+  console.log(salary);
 
   return (
     <>
@@ -84,7 +90,11 @@ export const VacancyCard = (props) => {
         ]}
       >
         <p>{companyName}</p>
-        <Meta title={`Зарплата: ${salary} ${currency}`} />
+        <Meta
+          title={`Зарплата: ${
+            salary_min < 1 ? "до " + salary_max + currency : salary + currency
+          }`}
+        />
       </Card>
 
       <Modal
@@ -99,6 +109,8 @@ export const VacancyCard = (props) => {
         <VacancyDetail
           vac_url={vac_url}
           id={id}
+          salary_min={salary_min}
+          salary_max={salary_max}
           currency={currency}
           salary={salary}
           jobName={jobName}
