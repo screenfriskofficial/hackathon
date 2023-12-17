@@ -80,7 +80,7 @@ const VacanciesPage = () => {
   const [vacancies, setVacancies] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [limit, setLimit] = useState(30);
-  const [category, setCategory] = useState(options[0].label);
+  const [category, setCategory] = useState(options[0]);
   const [searchValue, setSearchValue] = useState("");
 
   const { Search } = Input;

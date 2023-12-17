@@ -83,7 +83,9 @@ export const VacancyCard = (props) => {
       <Modal
         open={isModalOpen}
         onOk={handleOk}
-        bodyStyle={{ overflowY: "auto", maxHeight: "calc(100vh - 200px)" }}
+        bodyProps={{
+          style: { overflowY: "auto", maxHeight: "calc(100vh - 200px)" },
+        }}
         onCancel={handleCancel}
         footer={null}
       >

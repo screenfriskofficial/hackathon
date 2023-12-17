@@ -62,9 +62,18 @@ export const Navbar = () => {
                 <p>Профиль</p>
               </Button>
             ) : (
-              <Link to={"/login"}>
-                <Button className="cursor-pointer">Вход</Button>
-              </Link>
+              <>
+                {location.pathname === "/login" ||
+                location.pathname === "/register" ? (
+                  <Link to={"/"}>
+                    <Button className="cursor-pointer">Назад</Button>
+                  </Link>
+                ) : (
+                  <Link to={"/login"}>
+                    <Button className="cursor-pointer">Вход</Button>
+                  </Link>
+                )}
+              </>
             )}
           </nav>
         </div>
