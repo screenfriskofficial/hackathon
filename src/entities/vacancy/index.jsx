@@ -6,7 +6,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { favoritesActions } from "../favorites/models/slice/favoritesSlice.jsx";
 
 export const VacancyCard = (props) => {
-  const { id, jobName, salary, currency, vac_url, duty, location } = props;
+  const {
+    id,
+    jobName,
+    salary,
+    currency,
+    vac_url,
+    duty,
+    location,
+    companyName,
+  } = props;
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const dispatch = useDispatch();
@@ -74,6 +83,7 @@ export const VacancyCard = (props) => {
           ),
         ]}
       >
+        <p>{companyName}</p>
         <Meta
           title={`Зарплата: ${salary} ${currency}`}
           description={`Вакансия: ${vac_url}`}

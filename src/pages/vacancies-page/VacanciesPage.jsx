@@ -182,6 +182,7 @@ const VacanciesPage = () => {
       )}
       {vacancies.map((vacancy) => (
         <VacancyCard
+          companyName={vacancy.vacancy.company.name}
           key={vacancy.vacancy.id}
           id={vacancy.vacancy.id}
           jobName={vacancy.vacancy["job-name"]}
