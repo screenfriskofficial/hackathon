@@ -99,7 +99,9 @@ export const VacancyDetail = ({
     <div className="">
       <h3>{jobName}</h3>
       <p>
-        Заработная плата {salary} {currency} {salary_max && "до " + salary_max}
+        {`Зарплата: ${
+          salary_min < 1 ? "до " + salary_max + currency : salary + currency
+        }`}
       </p>
 
       <Divider />
