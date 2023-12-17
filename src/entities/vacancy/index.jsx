@@ -84,10 +84,7 @@ export const VacancyCard = (props) => {
         ]}
       >
         <p>{companyName}</p>
-        <Meta
-          title={`Зарплата: ${salary} ${currency}`}
-          description={`Вакансия: ${vac_url}`}
-        />
+        <Meta title={`Зарплата: ${salary} ${currency}`} />
       </Card>
 
       <Modal

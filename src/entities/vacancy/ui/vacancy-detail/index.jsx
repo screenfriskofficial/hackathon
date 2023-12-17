@@ -108,7 +108,17 @@ export const VacancyDetail = ({
       ))}
 
       <Divider />
-      <QRCode value={vac_url || "-"} className="mb-3" />
+
+      <h3>
+        Вакансия доступна по QR или по{" "}
+        <a className="uppercase text-blue-400" href={vac_url}>
+          ссылке
+        </a>
+      </h3>
+
+      <Divider />
+
+      <QRCode bgColor={"#fff"} value={vac_url || "-"} className="mb-3" />
       {token && (
         <div className="flex flex-col gap-5">
           <Select
