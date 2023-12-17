@@ -1,10 +1,11 @@
-import { Button, Divider, message, Select } from "antd";
+import { Button, Divider, message, QRCode, Select } from "antd";
 import { useContext, useEffect, useState } from "react";
 import { $api } from "../../../../shared/api/api.js";
 import { UserContext } from "../../../../app/providers/user-provider/UserProvider.jsx";
 import { plural } from "../../../../shared/lib/plural/Plural.js";
 
 export const VacancyDetail = ({
+  vac_url,
   id,
   salary,
   currency,
@@ -105,7 +106,9 @@ export const VacancyDetail = ({
       {location.map((item) => (
         <p key={item.location}>{item.location}</p>
       ))}
+
       <Divider />
+      <QRCode value={vac_url || "-"} className="mb-3" />
       {token && (
         <div className="flex flex-col gap-5">
           <Select
