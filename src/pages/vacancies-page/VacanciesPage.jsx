@@ -80,7 +80,7 @@ const VacanciesPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [vacancies, setVacancies] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [limit, setLimit] = useState(30);
+  const [limit, setLimit] = useState(20);
   const [category, setCategory] = useState(options[0].value);
   const [region, setRegion] = useState(65);
   const [searchValue, setSearchValue] = useState("");
@@ -98,11 +98,13 @@ const VacanciesPage = () => {
   const onChangeCategory = (value) => {
     setCategory(value);
     setSearchValue("");
+    setCurrentPage(1);
   };
 
   const onChangeRegion = (value) => {
     setRegion(value);
     setSearchValue("");
+    setCurrentPage(1);
   };
   const onChangePage = (page) => {
     setCurrentPage(page);
