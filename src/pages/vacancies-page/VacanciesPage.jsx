@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { Pagination, Select, Input, Button } from "antd";
+import { Pagination, Select, Input, Button, message } from "antd";
 import axios from "axios";
 import { VacancyCard } from "../../entities/vacancy/index.jsx";
 import { Spinner } from "../../shared/ui/spinner/index.jsx";
+import { $api } from "../../shared/api/api.js";
 
 const options = [
   { value: "DeskWork", label: "Административная работа, секретариат, АХО" },
@@ -75,18 +76,32 @@ const options = [
 ];
 
 const VacanciesPage = () => {
+  const [regions, setRegions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
   const [vacancies, setVacancies] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [limit, setLimit] = useState(30);
-  const [category, setCategory] = useState(options[0]);
+  const [category, setCategory] = useState(options[0].value);
+  const [region, setRegion] = useState(65);
   const [searchValue, setSearchValue] = useState("");
 
   const { Search } = Input;
 
+  useEffect(() => {
+    const getRegions = async () => {
+      const response = await $api.get("/regions");
+      setRegions(response.data);
+    };
+    getRegions();
+  }, []);
+
   const onChangeCategory = (value) => {
     setCategory(value);
+    setSearchValue("");
+  };
+
+  const onChangeRegion = (value) => {
+    setRegion(value);
     setSearchValue("");
   };
   const onChangePage = (page) => {
@@ -103,7 +118,7 @@ const VacanciesPage = () => {
       setIsLoading(true);
       try {
         const response = await axios.get(
-          "https://opendata.trudvsem.ru/api/v1/vacancies/region/65",
+          `https://opendata.trudvsem.ru/api/v1/vacancies/region/${region}`,
           {
             params: {
               text: searchValue,
@@ -116,13 +131,13 @@ const VacanciesPage = () => {
         const data = response.data.results?.vacancies || [];
         setVacancies(data);
       } catch (e) {
-        setError(e.message);
+        message.error(e.message);
       } finally {
         setIsLoading(false);
       }
     };
     getVacancies();
-  }, [currentPage, limit, searchValue, category]);
+  }, [currentPage, limit, searchValue, category, region]);
 
   if (isLoading) {
     return <Spinner />;
@@ -130,22 +145,35 @@ const VacanciesPage = () => {
 
   return (
     <div className={"container m-auto flex flex-col"}>
-      {error && <div>Error: {error}</div>}
       <Search
         placeholder="Поиск по вакансиям"
         onSearch={onSearch}
         className={"mt-4"}
       />
 
-      <Select
-        className="mt-4"
-        style={{ width: "100%" }}
-        defaultValue={category}
-        placeholder="Сферы деятельности"
-        onChange={onChangeCategory}
-        optionLabelProp="label"
-        options={options}
-      />
+      {regions && (
+        <div className="flex flex-row gap-4 items-center">
+          <Select
+            className="mt-4"
+            style={{ width: "50%" }}
+            defaultValue={category}
+            placeholder="Сферы деятельности"
+            onChange={onChangeCategory}
+            optionLabelProp="label"
+            options={options}
+          />
+
+          <Select
+            className="mt-4"
+            style={{ width: "50%" }}
+            defaultValue={region}
+            placeholder="Выбор региона"
+            onChange={onChangeRegion}
+            optionLabelProp="label"
+            options={regions}
+          />
+        </div>
+      )}
 
       {vacancies.length < 1 && (
         <span className="w-full flex justify-center items-center">
