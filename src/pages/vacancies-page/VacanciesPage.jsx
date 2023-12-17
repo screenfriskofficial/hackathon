@@ -98,10 +98,6 @@ const VacanciesPage = () => {
     setCategory("");
   };
 
-  const onClear = () => {
-    setCategory("");
-  };
-
   useEffect(() => {
     const getVacancies = async () => {
       setIsLoading(true);
@@ -139,7 +135,6 @@ const VacanciesPage = () => {
         placeholder="Поиск по вакансиям"
         onSearch={onSearch}
         className={"mt-4"}
-        onClear={onClear}
       />
 
       <Select
