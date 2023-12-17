@@ -124,7 +124,7 @@ const VacanciesPage = () => {
           {
             params: {
               text: searchValue,
-              limit: limit,
+              limit: 10,
               offset: currentPage,
               industry: searchValue.length >= 1 ? "" : category,
             },
@@ -199,7 +199,7 @@ const VacanciesPage = () => {
         rootClassName="mt-4"
         onChange={onChangePage}
         defaultCurrent={currentPage}
-        total={vacancies.length}
+        total={limit}
       />
     </div>
   );

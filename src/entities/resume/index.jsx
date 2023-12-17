@@ -89,6 +89,7 @@ export const ResumeCard = (props) => {
         footer={null}
       >
         <ResumeDetail
+          fio={fio}
           title={title}
           experience={experience}
           email={email}

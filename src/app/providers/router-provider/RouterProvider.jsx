@@ -3,9 +3,6 @@ import { MainLayout } from "../../../pages/layouts/main-layout/MainLayout";
 import { Loadable } from "../../../shared/lib/loadable/Loadable";
 import { lazy } from "react";
 
-const MainPage = Loadable(
-  lazy(() => import("../../../pages/main-page/MainPage")),
-);
 const VacanciesPage = Loadable(
   lazy(() => import("../../../pages/vacancies-page/VacanciesPage")),
 );

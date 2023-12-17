@@ -3,6 +3,7 @@ import { plural } from "../../../../shared/lib/plural/Plural.js";
 import axios from "axios";
 
 export const ResumeDetail = ({
+  fio,
   title,
   experience,
   email,
@@ -15,11 +16,11 @@ export const ResumeDetail = ({
 }) => {
   return (
     <div className="">
-      <h4>{title}</h4>
-      <p>Заработная плата: {salary} руб.</p>
+      <h4>{fio}</h4>
+      <p>Желаемая зарплата: {salary} руб.</p>
       {description && <p>Описание: {description}</p>}
       <p>
-        Требуемый опыт работы: {experience}&nbsp;
+        Опыт работы: {experience}&nbsp;
         {plural(experience)}.
       </p>
       <Divider />
@@ -30,9 +31,9 @@ export const ResumeDetail = ({
       <p>Образование: {education}</p>
       <Divider />
 
-      <h3>Связаться с {title}</h3>
-      <p>Наша почта: {email}</p>
-      <p>Звонить сюда: {phone_number}</p>
+      <h3>Связаться с {fio}</h3>
+      <p>Электронная почта: {email}</p>
+      <p>Номер телеофна: {phone_number}</p>
       <Divider />
     </div>
   );

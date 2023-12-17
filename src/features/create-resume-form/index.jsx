@@ -96,7 +96,7 @@ export const CreateResumeForm = () => {
           name="salary"
           control={control}
           render={({ field }) => (
-            <Input placeholder={"Желаемая з/п"} {...field} />
+            <Input placeholder={"Желаемая зарплата"} {...field} />
           )}
         />
         <p className="text-red-600">{errors.salary?.message}</p>
@@ -117,7 +117,9 @@ export const CreateResumeForm = () => {
         <Controller
           name="email"
           control={control}
-          render={({ field }) => <Input placeholder={"Почта"} {...field} />}
+          render={({ field }) => (
+            <Input placeholder={"Электронная почта"} {...field} />
+          )}
         />
         <p className="text-red-600">{errors.email?.message}</p>
       </section>
@@ -126,7 +128,7 @@ export const CreateResumeForm = () => {
         <Controller
           name="address"
           control={control}
-          render={({ field }) => <Input placeholder={"Адресс"} {...field} />}
+          render={({ field }) => <Input placeholder={"Адрес"} {...field} />}
         />
         <p className="text-red-600">{errors.address?.message}</p>
       </section>
